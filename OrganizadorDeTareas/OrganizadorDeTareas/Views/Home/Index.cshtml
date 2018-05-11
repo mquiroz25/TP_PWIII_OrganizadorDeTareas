@@ -12,26 +12,45 @@
     <title>Hello, world!</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <!-- Brand/logo -->
+        <a class="navbar-brand" href="#">Organizador de Tareas</a>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/login') }}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/register') }}">Register</a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+
     <div class="jumbotron text-center">
-        <h1>My First Bootstrap Page</h1>
-        <p>Resize this responsive page to see the effect!</p>
+        <h1>Aplicacion web</h1>
+        <p>Organice sus tareas de un modo facil y rapido con esta nueva aplicacion.<br>
+        Registrese de forma gratuita y obtenga todos los beneficios!
+        </p>
     </div>
 
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <h3>Commits</h3>
-                <p>Pablo Suarez</p>
+                <h3>Gestion rapida de tareas</h3>
+                <img src="~/Imagenes/lista-tareas-organizacion-e1493275990255-810x466.jpg" class="img-fluid" alt="Responsive image">
                 <p>Ut enim ad..</p>
             </div>
             <div class="col-sm-4">
-                <h3>Column 2</h3>
-                <p>Lorem ipsum dolor..</p>
+                <h3>Diseño elegante</h3>
+                <img src="~/Imagenes/conoce-tipos-aplicacion_1_2455159.jpg" class="img-fluid" alt="Responsive image">
                 <p>Ut enim ad..</p>
             </div>
             <div class="col-sm-4">
-                <h3>Column 3</h3>
-                <p>Lorem ipsum dolor..</p>
+                <h3>Facil de usar</h3>
+                <img src="~/Imagenes/apps-gestion-tareas.png" class="img-fluid" alt="Responsive image">
                 <p>Ut enim ad..</p>
             </div>
         </div>
