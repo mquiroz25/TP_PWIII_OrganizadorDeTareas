@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "registracion";
+}
+<h2 class="text-center">Registro de Usuario</h2>
+
+
+<div id="formulario" class=" container-fluid  mx-auto row justify-content-center">
+
+    <form method="post" action="/Home/registracionexitosa">
+        <div class="col-4 col-form-label">Nombre</div>
+        <div class="col-12">
+            <input class="form-control" type="text" id="nombre">
+        </div>
+
+        <div class="col-4 col-form-label">Apellido</div>
+
+        <div class="col-12">
+            <input class="form-control" type="text" id="apellido">
+        </div>
+
+        <div class="col-4 col-form-label">Email</div>
+
+        <div class="col-12">
+            <input class="form-control" type="email" id="email">
+        </div>
+
+
+        <div class="col-4 col-form-label">Contraseña</div>
+        <div class="col-12">
+            <input class="form-control" type="password" id="Contraseña">
+        </div>
+
+        <div class="col-4 col-form-label">
+            <button type="submit" class="btn btn-primary ">Registrarse</button>
+        </div>
+    </form>
+</div>
+
+
+

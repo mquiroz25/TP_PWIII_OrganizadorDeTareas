@@ -18,5 +18,10 @@ namespace OrganizadorDeTareas.Controllers
         {
             return View();
         }
+
+        public ActionResult registracion()
+        {
+            return View();
+        }
     }
 }
