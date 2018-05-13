@@ -13,5 +13,10 @@ namespace OrganizadorDeTareas.Controllers
         {
             return View();
         }
+
+        public ActionResult Logueado()
+        {
+            return View();
+        }
     }
 }
