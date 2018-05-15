@@ -169,6 +169,7 @@
     <Content Include="Views\Home\registracion.cshtml" />
     <Content Include="Views\carpetas\crear.cshtml" />
     <Content Include="Views\carpetas\MisCarpetasCreadas.cshtml" />
+    <Content Include="Views\Home\login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -23,5 +23,14 @@ namespace OrganizadorDeTareas.Controllers
         {
             return View();
         }
+        public ActionResult login()
+        {
+            return View();
+        }
+
+        public ActionResult logout()
+        {
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

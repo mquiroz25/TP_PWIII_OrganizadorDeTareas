@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "login";
+}
+
+
+<h2 class="text-center">Iniciar Sesion</h2>
+
+
+<div id="formulario" class=" container-fluid  mx-auto row justify-content-center">
+
+    <form method="post" action="/Home/logueado">
+
+        <div class="col-4 col-form-label">Email</div>
+
+        <div class="col-12">
+            <input class="form-control" type="email" id="email">
+        </div>
+
+
+        <div class="col-4 col-form-label">Contraseña</div>
+        <div class="col-12">
+            <input class="form-control" type="password" id="Contraseña">
+        </div>
+
+        <div class="col-4 col-form-label">
+            <button type="submit" class="btn btn-primary ">Login</button>
+        </div>
+    </form>
+</div>
+
+
