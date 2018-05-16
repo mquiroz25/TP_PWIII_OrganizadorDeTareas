@@ -164,12 +164,11 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Logueado.cshtml" />
-    <Content Include="Views\Home\registracion.cshtml" />
-    <Content Include="Views\carpetas\crear.cshtml" />
-    <Content Include="Views\carpetas\MisCarpetasCreadas.cshtml" />
-    <Content Include="Views\Home\login.cshtml" />
+    <Content Include="Views\home\index.cshtml" />
+    <Content Include="Views\home\logueado.cshtml" />
+    <Content Include="Views\home\registracion.cshtml" />
+    <Content Include="Views\home\login.cshtml" />
+    <Content Include="Views\carpetas\index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

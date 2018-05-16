@@ -9,12 +9,12 @@ namespace OrganizadorDeTareas.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult Index()
+        public ActionResult index()
         {
             return View();
         }
 
-        public ActionResult Logueado()
+        public ActionResult logueado()
         {
             return View();
         }
@@ -30,7 +30,7 @@ namespace OrganizadorDeTareas.Controllers
 
         public ActionResult logout()
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("index", "home");
         }
     }
 }
