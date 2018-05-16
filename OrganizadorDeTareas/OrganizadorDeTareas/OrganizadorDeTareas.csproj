@@ -147,6 +147,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Carpeta.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -166,7 +167,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\home\index.cshtml" />
-    <Content Include="Views\home\logueado.cshtml" />
     <Content Include="Views\home\registracion.cshtml" />
     <Content Include="Views\home\login.cshtml" />
     <Content Include="Views\carpetas\index.cshtml" />

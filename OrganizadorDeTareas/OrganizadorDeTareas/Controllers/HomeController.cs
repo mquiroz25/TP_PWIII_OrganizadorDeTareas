@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OrganizadorDeTareas.Models;
 
 namespace OrganizadorDeTareas.Controllers
 {
@@ -14,9 +15,12 @@ namespace OrganizadorDeTareas.Controllers
             return View();
         }
 
-        public ActionResult logueado()
+        public ActionResult logueado(Usuario u)
         {
-            return View();
+            Session["mail"] = u.email;
+            return RedirectToAction("index", "home"); 
+
+        
         }
 
         public ActionResult registracion()
@@ -30,6 +34,7 @@ namespace OrganizadorDeTareas.Controllers
 
         public ActionResult logout()
         {
+            Session.Clear();
             return RedirectToAction("index", "home");
         }
     }
