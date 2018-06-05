@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using OrganizadorDeTareas.Models;
+
 
 namespace OrganizadorDeTareas.Controllers
 {
@@ -15,9 +15,10 @@ namespace OrganizadorDeTareas.Controllers
             return View();
         }
 
+
         public ActionResult logueado(Usuario u)
         {
-            Session["mail"] = u.email;
+            Session["mail"] = u.Email;
             return RedirectToAction("index", "home"); 
 
         
@@ -27,6 +28,7 @@ namespace OrganizadorDeTareas.Controllers
         {
             return View();
         }
+
         public ActionResult login()
         {
             return View();
