@@ -224,6 +224,9 @@
     <Content Include="Views\home\login.cshtml" />
     <Content Include="Views\carpetas\index.cshtml" />
     <Content Include="Views\Tareas\index.cshtml" />
+    <Content Include="Views\carpetas\crear.cshtml" />
+    <Content Include="Views\carpetas\Editar.cshtml" />
+    <Content Include="Views\carpetas\Listar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
