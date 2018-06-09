@@ -1,0 +1,20 @@
+﻿@model Carpeta
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar</h2>
+
+<form method="post" action="/carpetas/editar">
+
+    <input type="hidden" name="IdCarpeta" value="@Model.IdCarpeta" />
+
+    <label>Nombre:</label>
+    @Html.TextBoxFor(o => o.Nombre)
+
+    <label>Descripcion:</label>
+    @Html.TextBoxFor(o => o.Descripcion)
+
+    <input type="submit" value="Enviar">
+
+</form>
