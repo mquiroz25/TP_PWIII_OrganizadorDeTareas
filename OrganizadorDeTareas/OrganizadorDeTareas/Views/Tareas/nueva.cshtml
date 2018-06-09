@@ -1,0 +1,42 @@
+﻿@using OrganizadorDeTareas
+
+@{
+    ViewBag.Title = "nueva";
+}
+
+
+
+<h2>nueva tarea para: @Model.Nombre</h2>
+
+<form method="post" action="/Tareas/crear">
+    <br>
+    <div class="form-group">
+
+        <input type="hidden" name="IdCarpeta" value="@Model.IdCarpeta" />
+
+        <label>Nombre:</label>
+        <input type="text" class="form-control" name="Nombre">
+
+        <label>Descripcion:</label>
+        <input type="text" class="form-control" name="Descripcion">
+
+        <label>Horas Estimadas:</label>
+        <input type="text" class="form-control" name="EstimadoHoras">
+
+        <label>Fecha fin:</label>
+        <div class="input-group date" id="dtp" data-target-input="nearest">
+            <input type="text" name="FechaFin" class="form-control datetimepicker-input" data-target="#dtp1" />
+            <div class="input-group-append" data-target="#dtp" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
+        </div>
+
+        <label>Prioridad:</label>
+        <input type="text" class="form-control" name="Prioridad">
+
+        <input type="submit" class="form-control" value="Enviar">
+    </div>
+</form>
+
+
+

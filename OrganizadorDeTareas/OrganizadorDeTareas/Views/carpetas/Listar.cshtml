@@ -3,7 +3,7 @@
     ViewBag.Title = "Listar";
 }
 
-<h2>Listar</h2>
+<h2>Lista de Carpetas</h2>
 
 <table>
     <tr>
@@ -14,7 +14,7 @@
     @foreach (Carpeta carpeta in Model)
     {
         <tr>
-            <td>@carpeta.Nombre</td>
+            <td><span class="glyphicon glyphicon-folder-open"></span><a href="/Tareas/Listar/@carpeta.IdCarpeta"> @carpeta.Nombre </a></td>
             <td>@carpeta.Descripcion</td>
             <td> <a href="/carpetas/Editar/@carpeta.IdCarpeta">Editar</a></td>
             <td><a href="/carpetas/Borrar/@carpeta.IdCarpeta">Borrar</a></td>

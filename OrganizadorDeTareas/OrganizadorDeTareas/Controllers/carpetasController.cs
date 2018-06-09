@@ -14,13 +14,29 @@ namespace OrganizadorDeTareas.Controllers
         // GET: carpetas
         public ActionResult index()
         {
-            return View();
+            if (Session["usuarioid"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                TempData["mensaje"] = "login requerido";
+                return RedirectToAction("login", "home");
+            }
 
         }
 
         public ActionResult crear()
         {
-            return View();
+            if (Session["usuarioid"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                TempData["mensaje"] = "login requerido";
+                return RedirectToAction("login", "home");
+            }
 
         }
 
@@ -28,24 +44,39 @@ namespace OrganizadorDeTareas.Controllers
         public ActionResult crear(Carpeta carpeta)
 
         {
-            carpeta.FechaCreacion = DateTime.Now;
-            CTX.Carpeta.Add(carpeta);
-            CTX.SaveChanges();
-
-            return RedirectToAction("Listar");
-
+            if (Session["usuarioid"] != null)
+            {
+                carpeta.FechaCreacion = DateTime.Now;
+                carpeta.IdUsuario = (int)Session["usuarioid"];
+                CTX.Carpeta.Add(carpeta);
+                CTX.SaveChanges();
+                return RedirectToAction("Listar");
+            }
+            else
+            {
+                TempData["mensaje"] = "login requerido";
+                return RedirectToAction("login", "home");
+            }
         }
 
         public ActionResult Editar(int id)
         {
-            Carpeta carpeta = CTX.Carpeta.FirstOrDefault(o => o.IdCarpeta == id);
-
-            if (carpeta != null)
+            if (Session["usuarioid"] != null)
             {
-                return View(carpeta);
+                Carpeta carpeta = CTX.Carpeta.FirstOrDefault(o => o.IdCarpeta == id);
 
+                if (carpeta != null)
+                {
+                    return View(carpeta);
+
+                }
+                return RedirectToAction("Listar");
             }
-            return RedirectToAction("Listar");
+            else
+            {
+                TempData["mensaje"] = "login requerido";
+                return RedirectToAction("login", "home");
+            }
         }
 
         [HttpPost]
@@ -58,7 +89,6 @@ namespace OrganizadorDeTareas.Controllers
             {
                 carpActual.Nombre = carpeta.Nombre;
                 carpActual.Descripcion = carpeta.Descripcion;
-
                 CTX.SaveChanges();
                 return RedirectToAction("Listar");
             }
@@ -69,23 +99,46 @@ namespace OrganizadorDeTareas.Controllers
 
         public ActionResult Borrar(int id)
         {
-            Carpeta carpeta = CTX.Carpeta.FirstOrDefault(o => o.IdCarpeta == id);
-
-            if (carpeta != null)
+            if (Session["usuarioid"] != null)
             {
-                CTX.Carpeta.Remove(carpeta);
-                CTX.SaveChanges();
+                Carpeta carpeta = CTX.Carpeta.FirstOrDefault(o => o.IdCarpeta == id);
+
+                if (carpeta != null)
+                {
+                    if (carpeta.IdUsuario == (int)Session["usuarioid"])
+                    {
+                        CTX.Carpeta.Remove(carpeta);
+                        CTX.SaveChanges();
+                    }
+                }
+
+                return RedirectToAction("Listar");
+            }
+            else
+            {
+                TempData["mensaje"] = "login requerido";
+                return RedirectToAction("login", "home");
             }
 
-            return RedirectToAction("Listar");
+
+
         }
 
         public ActionResult Listar()
         {
+            if (Session["usuarioid"] != null)
+            {
+                List<Carpeta> carpetas = CTX.Carpeta.ToList();
+                carpetas = carpetas.Where(o => o.IdUsuario == (int)Session["usuarioid"]).ToList<Carpeta>();
 
-            List<Carpeta> carpetas = CTX.Carpeta.ToList();
+                return View(carpetas);
+            }
+            else
+            {
+                TempData["mensaje"] = "login requerido";
+                return RedirectToAction("login", "home");
+            }
 
-            return View(carpetas);
         }
 
     }
