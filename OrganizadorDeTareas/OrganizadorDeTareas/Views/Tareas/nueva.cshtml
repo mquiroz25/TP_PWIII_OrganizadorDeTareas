@@ -5,20 +5,40 @@
 }
 
 
-
-<h2>nueva tarea para: @Model.Nombre</h2>
-
+@if (ViewBag.Carpetas == null)
+{
+    <h2>Nueva tarea para: @ViewBag.Nombre</h2>
+}
+else
+{
+    <h2>Nueva tarea</h2>
+}
 <form method="post" action="/Tareas/crear">
     <br>
     <div class="form-group">
 
-        <input type="hidden" name="IdCarpeta" value="@Model.IdCarpeta" />
+       
 
         <label>Nombre:</label>
         <input type="text" class="form-control" name="Nombre">
 
         <label>Descripcion:</label>
         <input type="text" class="form-control" name="Descripcion">
+
+        @if (ViewBag.Carpetas != null)
+        {
+            <label>Carpeta</label>
+            <select name="idCarpeta" class="form-control">
+                <option value="">Ninguna</option>
+                @foreach (Carpeta c in ViewBag.Carpetas)
+                {
+                    <option value="@c.IdCarpeta">@c.Nombre</option>
+                }
+
+            </select>
+        }else{
+        <input type="hidden" name="IdCarpeta" value="@ViewBag.idCarpeta" />
+        }
 
         <label>Horas Estimadas:</label>
         <input type="text" class="form-control" name="EstimadoHoras">

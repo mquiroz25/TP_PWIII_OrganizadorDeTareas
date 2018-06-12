@@ -3,12 +3,56 @@
     ViewBag.Title = "Detalle";
 }
 
-<h2>Detalle Para tarea : @ViewBag.tarea.Nombre</h2>
-Descripcion: @ViewBag.tarea.Descripcion <br />
-Fecha creacion: @ViewBag.tarea.FechaCreacion <br />
-Horas estimadas: @ViewBag.tarea.EstimadoHoras <br />
-Fecha Fin: @ViewBag.tarea.FechaFin <br />
-Prioridad: @ViewBag.tarea.Prioridad <br />
-Completada: @ViewBag.tarea.Completada <br />
+<div>
+    <h2>Detalle Para tarea : @ViewBag.tarea.Nombre</h2>
+    Descripcion: @ViewBag.tarea.Descripcion <br />
+    Carpeta: @ViewBag.carpeta <br />
+    Fecha creacion: @ViewBag.tarea.FechaCreacion <br />
+    Horas estimadas: @ViewBag.tarea.EstimadoHoras <br />
+    Fecha Fin: @ViewBag.tarea.FechaFin <br />
+    Prioridad: @ViewBag.tarea.Prioridad <br />
+    Completada: @ViewBag.tarea.Completada <br />
+</div>
+<div>
+    <h3>Archivos Adjuntos</h3>
+    @foreach (ArchivoTarea a in ViewBag.adjuntos)
+    {
+        <a href="@a.RutaArchivo">@a.RutaArchivo</a>
+    }
+    <div>
+        Subir nuevo adjunto
 
+        @using (Html.BeginForm("Adjunto",
+                            "Tareas",
+                            FormMethod.Post,
+                            new { enctype = "multipart/form-data" }))
+        {
+            <label for="file">Archivo:</label>
+            <input type="file" name="file" id="file" /><br><br>
+            <input type="hidden" name="idTarea" value="@ViewBag.id" />
+            <input type="submit" value="Enviar" />
+            <br><br>
+            @ViewBag.Message
+        }
+    </div>
 
+</div>
+
+<div>
+    <h3>Comentarios</h3>
+    @foreach (ComentarioTarea c in ViewBag.comentarios)
+    {
+        <div>
+            @c.FechaCreacion <br />
+            @c.Texto
+        </div>
+        }
+    <h3>Nuevo comentario</h3>
+    <form action="/Tareas/Comentario/@ViewBag.id" method="POST">
+        <div id="form-group">
+            <textarea class="form-control" rows="3" name="Texto"></textarea>
+            <input type="hidden" name="idTarea"value="@ViewBag.id" />
+            <button type="submit" class="form-control" value="Enviar"></button>
+        </div>
+    </form>
+</div>

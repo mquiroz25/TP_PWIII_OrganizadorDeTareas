@@ -3,7 +3,7 @@
     ViewBag.Title = "listar";
 }
 
-<h2>listar</h2>
+<h2>Listar</h2>
 
 <table>
     <tr>
@@ -18,7 +18,14 @@
             <td> <a href="/Tareas/Detalle/@tarea.IdTarea">Detalles</a></td>
         </tr>
     }
-    <a href="/Tareas/Nueva/@ViewBag.idCarpeta">Nueva</a>
 </table>
+    @if (ViewBag.idCarpeta == null)
+    {
+        <a href="/Tareas/Nueva/@ViewBag.idCarpeta">Nueva</a>
+    }
+    else
+    {
+        <a href="/Tareas/Nueva/">Nueva</a>
+    }
 <br>
 <a href="/carpetas/index/">Volver</a>
