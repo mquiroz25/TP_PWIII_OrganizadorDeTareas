@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CaptchaMvc.HtmlHelpers;
 
 
 namespace OrganizadorDeTareas.Controllers
@@ -32,6 +33,11 @@ namespace OrganizadorDeTareas.Controllers
         [HttpPost]
         public ActionResult Registro(Usuario u)
         {
+            if (!this.IsCaptchaValid("verifique el CAPTCHA"))
+            {
+                TempData["mensaje"] = "verifique el CAPTCHA";
+                return View();
+            }
             Usuario nuevo = new Usuario();
             nuevo.Nombre = u.Nombre;
             nuevo.Apellido = u.Apellido;
@@ -56,6 +62,13 @@ namespace OrganizadorDeTareas.Controllers
         [HttpPost]
         public ActionResult validarLogin()
         {
+            
+            if (!this.IsCaptchaValid("verifique el CAPTCHA"))
+            {
+                TempData["mensaje"] = "verifique el CAPTCHA";
+                return View();
+            }
+
             String loginMail = Request["Email"];
             String loginPass = Request["Contrasenia"];
             Usuario u = ctx.Usuario.SingleOrDefault(o => o.Email == loginMail && o.Contrasenia == loginPass);

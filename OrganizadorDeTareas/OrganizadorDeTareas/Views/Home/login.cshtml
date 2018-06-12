@@ -1,4 +1,4 @@
-﻿
+﻿@using CaptchaMvc.HtmlHelpers;
 @{
     ViewBag.Title = "login";
 }
@@ -22,6 +22,10 @@
         <div class="col-4 col-form-label">Contraseña</div>
         <div class="col-12">
             <input class="form-control" name="Contrasenia" type="password" maxlength="20" id="Contraseña">
+        </div>
+
+        <div class="col-4 col-form-label">
+            @Html.Captcha("update","captcha",4)
         </div>
 
         <div class="col-4 col-form-label">
