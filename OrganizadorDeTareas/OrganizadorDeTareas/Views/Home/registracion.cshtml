@@ -1,4 +1,6 @@
-﻿@using CaptchaMvc.HtmlHelpers
+﻿@model OrganizadorDeTareas.UsuarioMetaData
+
+@using CaptchaMvc.HtmlHelpers
 @{
     ViewBag.Title = "registracion";
 }
@@ -7,27 +9,31 @@
 
 <div id="formulario" class=" container-fluid  mx-auto row justify-content-center">
 
-    <form method="post" action="/Home/Registro">
+    <form method="post" action="/Home/registracion">
         <div class="col-4 col-form-label">Nombre</div>
         <div class="col-12">
+            @Html.ValidationMessageFor(o => o.Nombre)
             <input class="form-control" type="text" name="Nombre" id="Nombre">
         </div>
 
         <div class="col-4 col-form-label">Apellido</div>
 
         <div class="col-12">
+            @Html.ValidationMessageFor(o => o.Apellido)
             <input class="form-control" type="text" name="Apellido" id="Apellido">
         </div>
 
         <div class="col-4 col-form-label">Email</div>
 
         <div class="col-12">
+            @Html.ValidationMessageFor(o => o.Email)
             <input class="form-control" type="email" name="Email" id="Email">
         </div>
 
 
         <div class="col-4 col-form-label">Contraseña</div>
         <div class="col-12">
+            @Html.ValidationMessageFor(o => o.Contrasenia)
             <input class="form-control" type="password" name="Contrasenia" id="Contrasenia">
         </div>
 

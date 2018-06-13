@@ -41,26 +41,33 @@ namespace OrganizadorDeTareas.Controllers
         }
 
         [HttpPost]
-        public ActionResult Registro(Usuario u)
+        public ActionResult registracion(Usuario u)
         {
-            if (!this.IsCaptchaValid("verifique el CAPTCHA"))
+            if (ModelState.IsValid)
             {
-                TempData["mensaje"] = "verifique el CAPTCHA";
+                if (!this.IsCaptchaValid("verifique el CAPTCHA"))
+                {
+                    TempData["mensaje"] = "verifique el CAPTCHA";
+                    return View();
+                }
+                Usuario nuevo = new Usuario();
+                nuevo.Nombre = u.Nombre;
+                nuevo.Apellido = u.Apellido;
+                nuevo.Contrasenia = u.Contrasenia;
+                nuevo.Email = u.Email;
+                nuevo.FechaRegistracion = DateTime.Now;
+                nuevo.FechaActivacion = DateTime.Now;
+                nuevo.CodigoActivacion = "aaaaa";
+                nuevo.Activo = 1;
+                ctx.Usuario.Add(nuevo);
+                ctx.SaveChanges();
+
+                return RedirectToAction("index", "home");
+            }
+            else
+            {
                 return View();
             }
-            Usuario nuevo = new Usuario();
-            nuevo.Nombre = u.Nombre;
-            nuevo.Apellido = u.Apellido;
-            nuevo.Contrasenia = u.Contrasenia;
-            nuevo.Email = u.Email;
-            nuevo.FechaRegistracion = DateTime.Now;
-            nuevo.FechaActivacion = DateTime.Now;
-            nuevo.CodigoActivacion = "aaaaa";
-            nuevo.Activo = 1;
-            ctx.Usuario.Add(nuevo);
-            ctx.SaveChanges();
-
-            return RedirectToAction("index", "home");
         }
 
         public ActionResult login()
