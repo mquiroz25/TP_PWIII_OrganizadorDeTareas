@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CaptchaMvc.HtmlHelpers;
+using System.Web.Security;
 
 
 namespace OrganizadorDeTareas.Controllers
@@ -15,6 +16,15 @@ namespace OrganizadorDeTareas.Controllers
         // GET: Home
         public ActionResult index()
         {
+            
+            if (Session["usuarioid"] == null)
+            {
+                if (HttpContext.User.Identity.IsAuthenticated == true)
+                {
+                    Session["usuarioid"] = HttpContext.User.Identity.Name;
+                }
+            }
+            
             return View();
         }
 
@@ -55,7 +65,23 @@ namespace OrganizadorDeTareas.Controllers
 
         public ActionResult login()
         {
-            return View();
+            if (Session["usuarioid"] == null)
+            {
+                if (HttpContext.User.Identity.IsAuthenticated == true)
+                {
+                    Session["usuarioid"] = HttpContext.User.Identity.Name;
+                    return RedirectToAction("index", "home");
+                }
+                else {
+                    return View();
+                }
+            }
+            else
+            {
+                return RedirectToAction("index", "home");
+            }
+
+            
         }
 
         [ActionName("login")]
@@ -76,6 +102,18 @@ namespace OrganizadorDeTareas.Controllers
             {
                 Session["mail"] = u.Email;
                 Session["usuarioid"] = u.IdUsuario;
+                bool record;
+                if (Request["Recordar"] == "S")
+                {
+                    record = true;
+                }
+                else
+                {
+                    record = false;
+                }
+
+                FormsAuthentication.SetAuthCookie(u.IdUsuario.ToString(), record);
+
                 return RedirectToAction("index", "home");
             }
             else
@@ -89,6 +127,7 @@ namespace OrganizadorDeTareas.Controllers
         public ActionResult logout()
         {
             Session.Clear();
+            FormsAuthentication.SignOut();
             return RedirectToAction("index", "home");
         }
     }
