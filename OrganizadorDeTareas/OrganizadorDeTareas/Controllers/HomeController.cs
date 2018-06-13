@@ -21,7 +21,7 @@ namespace OrganizadorDeTareas.Controllers
             {
                 if (HttpContext.User.Identity.IsAuthenticated == true)
                 {
-                    Session["usuarioid"] = HttpContext.User.Identity.Name;
+                    Session["usuarioid"] = int.Parse(HttpContext.User.Identity.Name);
                 }
             }
             
@@ -69,7 +69,7 @@ namespace OrganizadorDeTareas.Controllers
             {
                 if (HttpContext.User.Identity.IsAuthenticated == true)
                 {
-                    Session["usuarioid"] = HttpContext.User.Identity.Name;
+                    Session["usuarioid"] = int.Parse(HttpContext.User.Identity.Name);
                     return RedirectToAction("index", "home");
                 }
                 else {
