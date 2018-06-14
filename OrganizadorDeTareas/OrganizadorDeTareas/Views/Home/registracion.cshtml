@@ -1,4 +1,4 @@
-﻿@model OrganizadorDeTareas.UsuarioMetaData
+﻿@model OrganizadorDeTareas.RegistroModel
 
 @using CaptchaMvc.HtmlHelpers
 @{
@@ -13,21 +13,22 @@
         <div class="col-4 col-form-label">Nombre</div>
         <div class="col-12">
             @Html.ValidationMessageFor(o => o.Nombre)
-            <input class="form-control" type="text" name="Nombre" id="Nombre">
+            <input class="form-control" type="text" name="Nombre" id="Nombre" value="@Model.Nombre">
         </div>
 
         <div class="col-4 col-form-label">Apellido</div>
 
         <div class="col-12">
             @Html.ValidationMessageFor(o => o.Apellido)
-            <input class="form-control" type="text" name="Apellido" id="Apellido">
+            <input class="form-control" type="text" name="Apellido" id="Apellido" value="@Model.Apellido">
         </div>
 
         <div class="col-4 col-form-label">Email</div>
 
         <div class="col-12">
             @Html.ValidationMessageFor(o => o.Email)
-            <input class="form-control" type="email" name="Email" id="Email">
+            <input class="form-control" type="email" name="Email" id="Email" value="@Model.Email
+">
         </div>
 
 
@@ -35,6 +36,12 @@
         <div class="col-12">
             @Html.ValidationMessageFor(o => o.Contrasenia)
             <input class="form-control" type="password" name="Contrasenia" id="Contrasenia">
+        </div>
+
+        <div class="col-4 col-form-label">Repetir contraseña</div>
+        <div class="col-12">
+            @Html.ValidationMessageFor(o => o.vContrasenia)
+            <input class="form-control" type="password" name="vContrasenia" id="vContrasenia">
         </div>
 
         <div class="col-4 col-form-label">

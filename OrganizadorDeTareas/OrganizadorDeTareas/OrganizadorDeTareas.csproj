@@ -207,6 +207,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\RegistroModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\UsuarioMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

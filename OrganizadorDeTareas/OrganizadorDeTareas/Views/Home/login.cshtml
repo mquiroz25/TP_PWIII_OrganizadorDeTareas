@@ -1,4 +1,7 @@
-﻿@using CaptchaMvc.HtmlHelpers;
+﻿@using CaptchaMvc.HtmlHelpers
+@using OrganizadorDeTareas
+@model OrganizadorDeTareas.LoginModel
+
 @{
     ViewBag.Title = "login";
 }
@@ -15,12 +18,14 @@
         <div class="col-4 col-form-label">Email</div>
 
         <div class="col-12">
-            <input class="form-control" name="Email" type="email" maxlength="50" id="email">
+            @Html.ValidationMessageFor(o => o.Email)
+            <input class="form-control" name="Email" type="email" maxlength="50" id="email" value="@Model.Email">
         </div>
 
 
         <div class="col-4 col-form-label">Contraseña</div>
         <div class="col-12">
+            @Html.ValidationMessageFor(o => o.Contrasenia)
             <input class="form-control" name="Contrasenia" type="password" maxlength="20" id="Contraseña">
         </div>
 

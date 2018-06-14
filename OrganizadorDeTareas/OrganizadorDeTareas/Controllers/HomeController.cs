@@ -7,6 +7,7 @@ using CaptchaMvc.HtmlHelpers;
 using System.Web.Security;
 
 
+
 namespace OrganizadorDeTareas.Controllers
 {
     public class HomeController : Controller
@@ -37,19 +38,28 @@ namespace OrganizadorDeTareas.Controllers
 
         public ActionResult registracion()
         {
-            return View();
+            RegistroModel rm = new RegistroModel();
+            return View(rm);
         }
 
         [HttpPost]
-        public ActionResult registracion(Usuario u)
+        public ActionResult registracion(RegistroModel u)
         {
             if (ModelState.IsValid)
             {
                 if (!this.IsCaptchaValid("verifique el CAPTCHA"))
                 {
                     TempData["mensaje"] = "verifique el CAPTCHA";
-                    return View();
+                    return View(u);
                 }
+
+                if (u.Contrasenia != u.vContrasenia)
+                {
+                    TempData["mensaje"] = "Las contraseñas no coinciden";
+                    return View(u);
+                }
+
+
                 Usuario nuevo = new Usuario();
                 nuevo.Nombre = u.Nombre;
                 nuevo.Apellido = u.Apellido;
@@ -66,7 +76,7 @@ namespace OrganizadorDeTareas.Controllers
             }
             else
             {
-                return View();
+                return View(u);
             }
         }
 
@@ -80,7 +90,8 @@ namespace OrganizadorDeTareas.Controllers
                     return RedirectToAction("index", "home");
                 }
                 else {
-                    return View();
+                    LoginModel lm = new LoginModel();
+                    return View(lm);
                 }
             }
             else
@@ -93,7 +104,7 @@ namespace OrganizadorDeTareas.Controllers
 
         [ActionName("login")]
         [HttpPost]
-        public ActionResult validarLogin()
+        public ActionResult validarLogin(LoginModel lm)
         {
             
             if (!this.IsCaptchaValid("verifique el CAPTCHA"))
@@ -102,33 +113,40 @@ namespace OrganizadorDeTareas.Controllers
                 return View();
             }
 
-            String loginMail = Request["Email"];
-            String loginPass = Request["Contrasenia"];
-            Usuario u = ctx.Usuario.SingleOrDefault(o => o.Email == loginMail && o.Contrasenia == loginPass);
-            if (!Object.ReferenceEquals(null, u))
+            if (ModelState.IsValid)
             {
-                Session["mail"] = u.Email;
-                Session["usuarioid"] = u.IdUsuario;
-                bool record;
-                if (Request["Recordar"] == "S")
+                String loginMail = lm.Email;
+                String loginPass = lm.Contrasenia;
+                Usuario u = ctx.Usuario.SingleOrDefault(o => o.Email == loginMail && o.Contrasenia == loginPass);
+                if (!Object.ReferenceEquals(null, u))
                 {
-                    record = true;
+                    Session["usuarioid"] = u.IdUsuario;
+                    bool record;
+                    if (lm.Recordar == "S")
+                    {
+                        record = true;
+                    }
+                    else
+                    {
+                        record = false;
+                    }
+
+                    FormsAuthentication.SetAuthCookie(u.IdUsuario.ToString(), record);
+
+                    return RedirectToAction("index", "home");
                 }
                 else
                 {
-                    record = false;
+                    TempData["mensaje"] = "usuario o contraseña incorrecto";
+                    return View(lm);
                 }
 
-                FormsAuthentication.SetAuthCookie(u.IdUsuario.ToString(), record);
 
-                return RedirectToAction("index", "home");
-            }
-            else
+            }else
             {
-                TempData["mensaje"] = "usuario o contraseña incorrecto";
-                return View();
+                return View(lm);
             }
-            
+
         }
 
         public ActionResult logout()
