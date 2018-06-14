@@ -27,17 +27,21 @@ namespace OrganizadorDeTareas.Controllers
         public ActionResult nueva(int? id) {
             if (Session["usuarioid"] != null)
             {
+                int sid = (int)Session["usuarioid"];
                 if (id != null) {
                     Carpeta carpeta = ctx.Carpeta.FirstOrDefault(o => o.IdCarpeta == id);
                     ViewBag.Nombre = carpeta.Nombre;
-                    ViewBag.idCarpeta = carpeta.IdCarpeta;
-                    return View();
+                    
+                    CrearTareaModel ct = new CrearTareaModel();
+                    ct.carpetas = ctx.Carpeta.Where(o => o.IdUsuario == sid).ToList<Carpeta>();
+                    ct.IdCarpeta= carpeta.IdCarpeta;
+                    return View(ct);
                 }
                 else
                 {
-                    List<Carpeta> carpetas = ctx.Carpeta.ToList();
-                    ViewBag.Carpetas = carpetas.Where(o => o.IdUsuario == (int)Session["usuarioid"]);
-                    return View();
+                    CrearTareaModel ct = new CrearTareaModel();
+                    ct.carpetas = ctx.Carpeta.Where(o => o.IdUsuario == sid).ToList<Carpeta>();
+                    return View(ct);
                 }
             }
             else
@@ -100,27 +104,36 @@ namespace OrganizadorDeTareas.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear(Tarea t)
+        public ActionResult nueva(CrearTareaModel t)
         {
-            Tarea nueva = new Tarea();
-            nueva.IdUsuario = (int)Session["usuarioid"];
-            nueva.IdCarpeta = t.IdCarpeta;
-            nueva.FechaCreacion = DateTime.Now;
-            nueva.Nombre = t.Nombre;
-            nueva.Descripcion = t.Descripcion;
-            nueva.EstimadoHoras = t.EstimadoHoras;
-            nueva.FechaFin = t.FechaFin;
-            nueva.Prioridad = t.Prioridad;
-            nueva.Completada = 0;
-            ctx.Tarea.Add(nueva);
-            ctx.SaveChanges();
-            if (t.IdCarpeta != null)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("listar/" + t.IdCarpeta, "tareas");
+                Tarea nueva = new Tarea();
+                nueva.IdUsuario = (int)Session["usuarioid"];
+                nueva.IdCarpeta = t.IdCarpeta;
+                nueva.FechaCreacion = DateTime.Now;
+                nueva.Nombre = t.Nombre;
+                nueva.Descripcion = t.Descripcion;
+                nueva.EstimadoHoras = t.EstimadoHoras;
+                nueva.FechaFin = t.FechaFin;
+                nueva.Prioridad = t.Prioridad;
+                nueva.Completada = 0;
+                ctx.Tarea.Add(nueva);
+                ctx.SaveChanges();
+                if (t.IdCarpeta != 0)
+                {
+                    return RedirectToAction("listar/" + t.IdCarpeta, "tareas");
+                }
+                else
+                {
+                    return RedirectToAction("listar", "tareas");
+                }
             }
             else
             {
-                return RedirectToAction("listar", "tareas");
+                int sid = (int)Session["usuarioid"];
+                t.carpetas = ctx.Carpeta.Where(o => o.IdUsuario == sid).ToList<Carpeta>();
+                return View(t);
             }
         }
 

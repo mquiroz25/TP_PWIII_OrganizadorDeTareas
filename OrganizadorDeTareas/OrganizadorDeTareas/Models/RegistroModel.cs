@@ -9,6 +9,7 @@ namespace OrganizadorDeTareas
     public class RegistroModel
     {
         [Required(ErrorMessage = "Requerido")]
+        [RegularExpression("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", ErrorMessage = "Mail invalido")]
         [MaxLength(200, ErrorMessage = "Maximo 200 caracteres")]
         public string Email { get; set; }
 

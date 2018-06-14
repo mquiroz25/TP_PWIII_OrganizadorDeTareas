@@ -1,4 +1,5 @@
 ﻿@using OrganizadorDeTareas
+@model OrganizadorDeTareas.CrearTareaModel
 
 @{
     ViewBag.Title = "nueva";
@@ -13,46 +14,56 @@ else
 {
     <h2>Nueva tarea</h2>
 }
-<form method="post" action="/Tareas/crear">
+<form method="post" action="/Tareas/nueva">
     <br>
     <div class="form-group">
 
        
 
+        @Html.ValidationMessageFor(o => o.Nombre)
         <label>Nombre:</label>
-        <input type="text" class="form-control" name="Nombre">
+        <input type="text" class="form-control" name="Nombre" value="@Model.Nombre">
 
+        @Html.ValidationMessageFor(o => o.Descripcion)
         <label>Descripcion:</label>
-        <input type="text" class="form-control" name="Descripcion">
+        <input type="text" class="form-control" name="Descripcion" value="@Model.Descripcion">
 
-        @if (ViewBag.Carpetas != null)
-        {
-            <label>Carpeta</label>
-            <select name="idCarpeta" class="form-control">
-                <option value="">Ninguna</option>
-                @foreach (Carpeta c in ViewBag.Carpetas)
+        <label>Carpeta</label>
+        <select name="idCarpeta" class="form-control">
+            <option value="">Ninguna</option>
+            @foreach (Carpeta c in Model.carpetas)
+            {
+                if (Model.IdCarpeta == c.IdCarpeta)
                 {
-                    <option value="@c.IdCarpeta">@c.Nombre</option>
+                <option value="@c.IdCarpeta" selected>@c.Nombre</option>
                 }
+                else
+                {
+                <option value="@c.IdCarpeta">@c.Nombre</option>
+                }
+            }
 
-            </select>
-        }else{
-        <input type="hidden" name="IdCarpeta" value="@ViewBag.idCarpeta" />
-        }
+        </select>
+
 
         <label>Horas Estimadas:</label>
-        <input type="text" class="form-control" name="EstimadoHoras">
+        <input type="text" class="form-control" name="EstimadoHoras" value="@Model.EstimadoHoras">
 
         <label>Fecha fin:</label>
         <div class="input-group date" id="dtp" data-target-input="nearest">
-            <input type="text" name="FechaFin" class="form-control datetimepicker-input" data-target="#dtp1" />
+            <input type="text" name="FechaFin" class="form-control datetimepicker-input" data-target="#dtp1" value="@Model.FechaFin" />
             <div class="input-group-append" data-target="#dtp" data-toggle="datetimepicker">
                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
             </div>
         </div>
 
         <label>Prioridad:</label>
-        <input type="text" class="form-control" name="Prioridad">
+        <select class="form-control" name="Prioridad">
+            <option value="1">Baja</option>
+            <option value="2">Media</option>
+            <option value="3">Alta</option>
+            <option value="4">Urgente</option>
+        </select>
 
         <input type="submit" class="form-control" value="Enviar">
     </div>

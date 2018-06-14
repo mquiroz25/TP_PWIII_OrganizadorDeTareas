@@ -30,7 +30,8 @@ namespace OrganizadorDeTareas.Controllers
         {
             if (Session["usuarioid"] != null)
             {
-                return View();
+                CrearCarpetaModel cc = new CrearCarpetaModel();
+                return View(cc);
             }
             else
             {
@@ -41,16 +42,26 @@ namespace OrganizadorDeTareas.Controllers
         }
 
         [HttpPost]
-        public ActionResult crear(Carpeta carpeta)
+        public ActionResult crear(CrearCarpetaModel cc)
 
         {
             if (Session["usuarioid"] != null)
             {
-                carpeta.FechaCreacion = DateTime.Now;
-                carpeta.IdUsuario = (int)Session["usuarioid"];
-                CTX.Carpeta.Add(carpeta);
-                CTX.SaveChanges();
-                return RedirectToAction("Listar");
+                if (ModelState.IsValid)
+                {
+                    Carpeta carpeta = new Carpeta();
+                    carpeta.Nombre = cc.Nombre;
+                    carpeta.Descripcion = cc.Descripcion;
+                    carpeta.FechaCreacion = DateTime.Now;
+                    carpeta.IdUsuario = (int)Session["usuarioid"];
+                    CTX.Carpeta.Add(carpeta);
+                    CTX.SaveChanges();
+                    return RedirectToAction("Listar");
+                }
+                else
+                {
+                    return View(cc);
+                }
             }
             else
             {

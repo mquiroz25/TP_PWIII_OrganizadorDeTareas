@@ -1,4 +1,6 @@
-﻿
+﻿@using OrganizadorDeTareas
+@model OrganizadorDeTareas.CrearCarpetaModel
+
 @{
     ViewBag.Title = "crear";
 }
@@ -10,11 +12,13 @@
 
 
     <label>Nombre:</label>
-    <input type="text" name="Nombre">
+    @Html.ValidationMessageFor(o => o.Nombre)
+    <input type="text" name="Nombre" value="@Model.Nombre">
 
 
     <label>Descripcion:</label>
-    <input type="text" name="Descripcion">
+    @Html.ValidationMessageFor(o => o.Descripcion)
+    <input type="text" name="Descripcion" value="@Model.Descripcion">
 
 
     <input type="submit" value="Enviar">
