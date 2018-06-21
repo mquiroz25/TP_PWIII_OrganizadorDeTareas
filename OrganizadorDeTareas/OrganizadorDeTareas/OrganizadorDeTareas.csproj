@@ -209,6 +209,7 @@
     </Compile>
     <Compile Include="Models\CrearTareaModel.cs" />
     <Compile Include="Models\CrearCarpetaModel.cs" />
+    <Compile Include="Models\RandomString.cs" />
     <Compile Include="Models\RegistroModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Usuario.cs" />
@@ -248,6 +249,8 @@
     <Content Include="Views\Tareas\nueva.cshtml" />
     <Content Include="Views\Tareas\listar.cshtml" />
     <Content Include="Views\Tareas\Detalle.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\home\UsuarioCreado.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

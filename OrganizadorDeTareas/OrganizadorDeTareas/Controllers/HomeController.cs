@@ -66,18 +66,59 @@ namespace OrganizadorDeTareas.Controllers
                 nuevo.Contrasenia = u.Contrasenia;
                 nuevo.Email = u.Email;
                 nuevo.FechaRegistracion = DateTime.Now;
-                nuevo.FechaActivacion = DateTime.Now;
-                nuevo.CodigoActivacion = "aaaaa";
-                nuevo.Activo = 1;
+                nuevo.CodigoActivacion = RandomString.Generar(12);
+                nuevo.Activo = 0;
                 ctx.Usuario.Add(nuevo);
                 ctx.SaveChanges();
+                Carpeta general = new Carpeta();
+                general.IdUsuario = nuevo.IdUsuario;
+                general.Nombre = "General";
+                general.FechaCreacion = DateTime.Now;
+                ctx.Carpeta.Add(general);
+                ctx.SaveChanges();
 
-                return RedirectToAction("index", "home");
+                return View("UsuarioCreado",nuevo);
             }
             else
             {
                 return View(u);
             }
+        }
+
+        public ActionResult Activar(string usuarioId, string codigoActivacion)
+        {
+            int uid = int.Parse(usuarioId);
+            Usuario a = ctx.Usuario.Find(uid);
+            if (a != null)
+            {
+                if (a.Activo == 0)
+                {
+                    if (a.CodigoActivacion == codigoActivacion)
+                    {
+                        a.Activo = 1;
+                        a.FechaActivacion = DateTime.Now;
+                        ctx.SaveChanges();
+                        TempData["mensaje"] = "Usuario activado";
+                        return RedirectToAction("login", "home");
+                    }
+                    else
+                    {
+                        TempData["error"] = "El codigo de activacion no es correcto";
+                        return View("error");
+                    }
+                }
+                else
+                {
+                    TempData["error"] = "Este usuario ya esta activado";
+                    return View("error");
+                }
+            }
+            else
+            {
+                TempData["error"] = "El usuario no existe";
+                return View("error");
+            }
+
         }
 
         public ActionResult login()
@@ -120,20 +161,28 @@ namespace OrganizadorDeTareas.Controllers
                 Usuario u = ctx.Usuario.SingleOrDefault(o => o.Email == loginMail && o.Contrasenia == loginPass);
                 if (!Object.ReferenceEquals(null, u))
                 {
-                    Session["usuarioid"] = u.IdUsuario;
-                    bool record;
-                    if (lm.Recordar == "S")
+                    if (u.Activo == 1)
                     {
-                        record = true;
+                        Session["usuarioid"] = u.IdUsuario;
+                        bool record;
+                        if (lm.Recordar == "S")
+                        {
+                            record = true;
+                        }
+                        else
+                        {
+                            record = false;
+                        }
+
+                        FormsAuthentication.SetAuthCookie(u.IdUsuario.ToString(), record);
+
+                        return RedirectToAction("index", "home");
                     }
                     else
                     {
-                        record = false;
+                        TempData["mensaje"] = "usuario no activado";
+                        return View(lm);
                     }
-
-                    FormsAuthentication.SetAuthCookie(u.IdUsuario.ToString(), record);
-
-                    return RedirectToAction("index", "home");
                 }
                 else
                 {

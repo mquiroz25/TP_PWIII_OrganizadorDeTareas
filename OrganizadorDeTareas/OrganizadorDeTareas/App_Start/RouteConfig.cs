@@ -14,6 +14,12 @@ namespace OrganizadorDeTareas
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Activar",
+                url: "Activar/{usuarioId}/{codigoActivacion}",
+                defaults: new { controller = "Home", action = "Activar", id = UrlParameter.Optional, codigo = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

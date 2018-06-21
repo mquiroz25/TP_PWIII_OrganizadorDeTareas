@@ -63,7 +63,7 @@ namespace OrganizadorDeTareas.Controllers
                 }
                 else
                 {
-                    ViewBag.tareas = ctx.Tarea.Where(o => o.IdUsuario == 1).ToList<Tarea>();
+                    ViewBag.tareas = ctx.Tarea.Where(o => o.IdUsuario == id).ToList<Tarea>();
                     return View();
                 }
             }
@@ -80,16 +80,9 @@ namespace OrganizadorDeTareas.Controllers
             {
                 Tarea tarea = ctx.Tarea.Find(id);
                 Carpeta carpeta = ctx.Carpeta.FirstOrDefault(o => o.IdCarpeta == tarea.IdCarpeta);
-                string NombreCarpeta;
-                if (carpeta == null)
-                {
-                    NombreCarpeta = "Ninguna";
-                }
-                else
-                {
-                    NombreCarpeta=carpeta.Nombre;
-                }
-                ViewBag.carpeta = NombreCarpeta;
+
+    
+                ViewBag.carpeta = carpeta.Nombre;
                 ViewBag.tarea = tarea;
                 ViewBag.id = id;
                 ViewBag.comentarios = ctx.ComentarioTarea.Where(o => o.IdTarea == id).ToList<ComentarioTarea>();
@@ -120,14 +113,10 @@ namespace OrganizadorDeTareas.Controllers
                 nueva.Completada = 0;
                 ctx.Tarea.Add(nueva);
                 ctx.SaveChanges();
-                if (t.IdCarpeta != 0)
-                {
-                    return RedirectToAction("listar/" + t.IdCarpeta, "tareas");
-                }
-                else
-                {
-                    return RedirectToAction("listar", "tareas");
-                }
+
+                return RedirectToAction("listar/" + t.IdCarpeta, "tareas");
+
+
             }
             else
             {

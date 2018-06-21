@@ -30,7 +30,6 @@ else
 
         <label>Carpeta</label>
         <select name="idCarpeta" class="form-control">
-            <option value="">Ninguna</option>
             @foreach (Carpeta c in Model.carpetas)
             {
                 if (Model.IdCarpeta == c.IdCarpeta)

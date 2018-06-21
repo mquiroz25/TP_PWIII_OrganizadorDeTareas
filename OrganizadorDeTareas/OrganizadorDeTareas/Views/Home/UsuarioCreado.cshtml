@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "UsuarioCreado";
+}
+
+<h2>UsuarioCreado</h2>
+
+El usuario @Model.Email fue creado <br />
+Codigo de activacion: @Model.CodigoActivacion <br />
+<a href="/Activar/@Model.IdUsuario/@Model.CodigoActivacion">Activar</a>
