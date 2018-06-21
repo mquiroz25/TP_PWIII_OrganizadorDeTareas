@@ -17,7 +17,7 @@
     <h3>Archivos Adjuntos</h3>
     @foreach (ArchivoTarea a in ViewBag.adjuntos)
     {
-        <a href="@a.RutaArchivo">@a.RutaArchivo</a>
+        <a href="@a.RutaArchivo">@a.RutaArchivo.Substring(17, a.RutaArchivo.Length - 17)</a><br />
     }
     <div>
         Subir nuevo adjunto

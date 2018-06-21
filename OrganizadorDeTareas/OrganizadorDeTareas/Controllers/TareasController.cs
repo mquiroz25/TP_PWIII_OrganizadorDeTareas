@@ -55,6 +55,7 @@ namespace OrganizadorDeTareas.Controllers
         public ActionResult Listar(int? id)
         {
             if (Session["usuarioid"] != null) {
+                int sid = (int)Session["usuarioid"];
                 if (id != null)
                 {
                     ViewBag.tareas = ctx.Tarea.Where(o => o.IdCarpeta == id).ToList<Tarea>();
@@ -63,7 +64,7 @@ namespace OrganizadorDeTareas.Controllers
                 }
                 else
                 {
-                    ViewBag.tareas = ctx.Tarea.Where(o => o.IdUsuario == id).ToList<Tarea>();
+                    ViewBag.tareas = ctx.Tarea.Where(o => o.IdUsuario == sid).ToList<Tarea>();
                     return View();
                 }
             }
@@ -171,6 +172,9 @@ namespace OrganizadorDeTareas.Controllers
             }
             
         }
+
+
+
 
     }
 }
