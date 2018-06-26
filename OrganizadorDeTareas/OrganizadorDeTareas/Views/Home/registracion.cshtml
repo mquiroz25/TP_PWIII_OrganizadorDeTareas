@@ -10,20 +10,20 @@
 <div id="formulario" class=" container-fluid  mx-auto row justify-content-center">
 
     <form method="post" action="/Home/registracion">
-        <div class="col-4 col-form-label">Nombre</div>
+        <div class="col-6 col-form-label">Nombre</div>
         <div class="col-12">
             @Html.ValidationMessageFor(o => o.Nombre)
             <input class="form-control" type="text" name="Nombre" id="Nombre" value="@Model.Nombre">
         </div>
 
-        <div class="col-4 col-form-label">Apellido</div>
+        <div class="col-6 col-form-label">Apellido</div>
 
         <div class="col-12">
             @Html.ValidationMessageFor(o => o.Apellido)
             <input class="form-control" type="text" name="Apellido" id="Apellido" value="@Model.Apellido">
         </div>
 
-        <div class="col-4 col-form-label">Email</div>
+        <div class="col-6 col-form-label">Email</div>
 
         <div class="col-12">
             @Html.ValidationMessageFor(o => o.Email)
@@ -32,23 +32,24 @@
         </div>
 
 
-        <div class="col-4 col-form-label">Contraseña</div>
+        <div class="col-6 col-form-label">Contraseña</div>
         <div class="col-12">
             @Html.ValidationMessageFor(o => o.Contrasenia)
             <input class="form-control" type="password" name="Contrasenia" id="Contrasenia">
         </div>
 
-        <div class="col-4 col-form-label">Repetir contraseña</div>
+        <div class="col-6 col-form-label">Repetir contraseña</div>
         <div class="col-12">
             @Html.ValidationMessageFor(o => o.vContrasenia)
             <input class="form-control" type="password" name="vContrasenia" id="vContrasenia">
         </div>
 
-        <div class="col-4 col-form-label">
+        <div class="col-6 col-form-label">
             @Html.Captcha("update", "captcha", 4)
         </div>
 
-        <div class="col-4 col-form-label">
+        <div class="col-6 col-form-label">
+            @TempData["mensaje"]
             <button type="submit" class="btn btn-primary ">Registrarse</button>
         </div>
     </form>

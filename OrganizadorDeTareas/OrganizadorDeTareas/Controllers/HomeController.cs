@@ -59,6 +59,12 @@ namespace OrganizadorDeTareas.Controllers
                     return View(u);
                 }
 
+                if (ctx.Usuario.FirstOrDefault(o => o.Email == u.Email) != null)
+                {
+                    TempData["mensaje"] = "El usuario ya existe";
+                    return View(u);
+                }
+
 
                 Usuario nuevo = new Usuario();
                 nuevo.Nombre = u.Nombre;
