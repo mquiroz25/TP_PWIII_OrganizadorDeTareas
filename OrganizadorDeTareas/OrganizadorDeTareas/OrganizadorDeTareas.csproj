@@ -251,6 +251,7 @@
     <Content Include="Views\Tareas\Detalle.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\home\UsuarioCreado.cshtml" />
+    <Content Include="Views\home\indexlog.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

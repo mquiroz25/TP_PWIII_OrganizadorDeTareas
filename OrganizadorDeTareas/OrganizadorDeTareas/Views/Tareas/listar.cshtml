@@ -5,27 +5,72 @@
 
 <h2>Listar</h2>
 
-<table>
-    <tr>
-        <th>Nombre</th>
-        <th>Descripcion</th>
-    </tr>
-    @foreach (Tarea tarea in ViewBag.tareas)
-    {
-        <tr>
-            <td>@tarea.Nombre</td>
-            <td>@tarea.Descripcion</td>
-            <td> <a href="/Tareas/Detalle/@tarea.IdTarea">Detalles</a></td>
+<div class="row">
+    <div class="col-3">
+        <div class="list-group">
+            @if (ViewBag.idCarpeta == null)
+            {<a href="/Tareas/Listar/" class="list-group-item active">Todas</a>}
+            else
+            {<a href="/Tareas/Listar/" class="list-group-item">Todas</a>}
+
+            @if (ViewBag.idCarpeta == 1)
+            {<a href="/Tareas/Listar/1" class="list-group-item active">General</a>}
+            else
+            {<a href="/Tareas/Listar/1" class="list-group-item">General</a>}
+
+            @foreach (Carpeta c in ViewBag.carpeta)
+            {
+                if (ViewBag.idCarpeta == @c.IdCarpeta)
+                {<a href="/Tareas/Listar/@c.IdCarpeta" class="list-group-item active">@c.Nombre</a>}
+                else
+                {<a href="/Tareas/Listar/@c.IdCarpeta" class="list-group-item">@c.Nombre</a>}
+            }
+            <a href="/Carpetas/crear/">Nueva Carpeta</a>
+        </div>
+    </div>
+    <div class="col-9">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha Fin</th>
+                    <th>Nombre</th>
+                    <th>Prioridad</th>
+                    <th>Carpeta</th>
+                    <th>Estimado</th>
+                    <th>Completado</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (Tarea t in ViewBag.tarea)
+            {
+                <tr>
+                    <td>@t.FechaFin</td>
+                    <td>@t.Nombre</td>
+                    <td>
+                        @switch (t.Prioridad)
+                    {
+                        case 1: <span>Baja</span> break;
+                        case 2: <span>Media</span> break;
+                        case 3: <span>Alta</span> break;
+                        case 4: <span>Urgente</span> break;
+                        default: <span>error</span> break;
+                    }
+                </td>
+                <td>@t.Carpeta.Nombre</td>
+                <td>@t.EstimadoHoras</td>
+                <td>@if (t.Completada == 0)
+                {<span>No</span>}
+                else {<span>Si</span>}</td>
+                <td><a href="/Tareas/Detalle/@t.IdTarea">Ver</a></td>
+                <td>
+                    @if (t.Completada == 0)
+                { <a href="/Tareas/Completar/@t.IdTarea" class="btn btn-success" role="button">Completar</a> }
+                else { <button class="btn">Completar</button>}
+            </td>
         </tr>
-    }
-</table>
-    @if (ViewBag.idCarpeta != null)
-    {
-        <a href="/Tareas/Nueva/@ViewBag.idCarpeta">Nueva</a>
-    }
-    else
-    {
-        <a href="/Tareas/Nueva/">Nueva</a>
-    }
-<br>
-<a href="/carpetas/index/">Volver</a>
+         }       
+        </table>
+        <a href="/Tareas/nueva/@ViewBag.idCarpeta">Nueva tarea</a>
+    </div>
+</div>

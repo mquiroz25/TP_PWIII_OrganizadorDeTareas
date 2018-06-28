@@ -17,5 +17,7 @@ namespace OrganizadorDeTareas
         public string Contrasenia { get; set; }
 
         public string Recordar { get; set; }
+
+        public string Regreso { get; set; }
     }
 }

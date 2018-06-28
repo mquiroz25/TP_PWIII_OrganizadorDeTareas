@@ -139,7 +139,7 @@ namespace OrganizadorDeTareas.Controllers
         {
             if (Session["usuarioid"] != null)
             {
-                List<Carpeta> carpetas = CTX.Carpeta.ToList();
+                List<Carpeta> carpetas = CTX.Carpeta.OrderBy(c => c.Nombre).ToList();
                 carpetas = carpetas.Where(o => o.IdUsuario == (int)Session["usuarioid"]).ToList<Carpeta>();
 
                 return View(carpetas);

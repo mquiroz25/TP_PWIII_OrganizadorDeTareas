@@ -7,14 +7,17 @@
 
 <form method="post" action="/carpetas/editar">
 
-    <input type="hidden" name="IdCarpeta" value="@Model.IdCarpeta" />
+    
 
-    <label>Nombre:</label>
-    @Html.TextBoxFor(o => o.Nombre)
+    <div class="form-control">
+        <input type="hidden" name="IdCarpeta" value="@Model.IdCarpeta" />
+        <label>Nombre:</label>
+        @Html.ValidationMessageFor(o => o.Nombre)
+        <input type="text" name="Nombre" class="form-control" value="@Model.Nombre">
 
-    <label>Descripcion:</label>
-    @Html.TextBoxFor(o => o.Descripcion)
-
-    <input type="submit" value="Enviar">
-
+        <label>Descripcion:</label>
+        @Html.ValidationMessageFor(o => o.Descripcion)
+        <input type="text" name="Descripcion" class="form-control" value="@Model.Descripcion">
+        <input type="submit" value="Enviar">
+    </div>
 </form>

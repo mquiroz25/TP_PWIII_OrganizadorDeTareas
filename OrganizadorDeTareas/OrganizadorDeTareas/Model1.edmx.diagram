@@ -14,6 +14,7 @@
         <AssociationConnector Association="PW3TP_20181C_TareasModel.FK_Carpeta_Usuario" ManuallyRouted="false" />
         <AssociationConnector Association="PW3TP_20181C_TareasModel.FK_Comentario_Tarea" ManuallyRouted="false" />
         <AssociationConnector Association="PW3TP_20181C_TareasModel.FK_Tareas_Usuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="PW3TP_20181C_TareasModel.FK_TareaCarpeta" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

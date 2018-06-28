@@ -58,13 +58,18 @@ namespace OrganizadorDeTareas.Controllers
                 int sid = (int)Session["usuarioid"];
                 if (id != null)
                 {
-                    ViewBag.tareas = ctx.Tarea.Where(o => o.IdCarpeta == id).ToList<Tarea>();
+                    ViewBag.carpeta = ctx.Carpeta.Where(c => c.IdUsuario == sid);
                     ViewBag.idCarpeta = id;
+                    List<Tarea> tareas = ctx.Tarea.Where(t => t.IdUsuario == sid && t.IdCarpeta==id).OrderByDescending(c => c.Prioridad).ToList();
+                    tareas.OrderBy(c => c.FechaFin);
+                    ViewBag.tarea = tareas;
                     return View();
                 }
-                else
-                {
-                    ViewBag.tareas = ctx.Tarea.Where(o => o.IdUsuario == sid).ToList<Tarea>();
+                else {
+                    ViewBag.carpeta = ctx.Carpeta.Where(c => c.IdUsuario == sid);
+                    List<Tarea> tareas = ctx.Tarea.Where(t => t.IdUsuario == sid).OrderByDescending(c => c.Prioridad).ToList();
+                    tareas.OrderBy(c => c.FechaFin);
+                    ViewBag.tarea = tareas;
                     return View();
                 }
             }
@@ -147,13 +152,19 @@ namespace OrganizadorDeTareas.Controllers
             {
                 try
                 {
-                    string path = Path.Combine(Server.MapPath("~/Archivos/Tareas/"),
-                                               Path.GetFileName(file.FileName));
+                    string fname = Path.GetFileNameWithoutExtension(file.FileName)
+                        + "_" + RandomString.Generar(5)
+                        + Path.GetExtension(file.FileName);
+                    if (!Directory.Exists(Server.MapPath("/Archivos/Tareas/" + idTarea + "/")))
+                    {
+                        Directory.CreateDirectory(Server.MapPath("/Archivos/Tareas/" + idTarea + "/"));
+                    }
+                    string path = Path.Combine(Server.MapPath("/Archivos/Tareas/"+idTarea+"/"),Path.GetFileName(fname));
                     file.SaveAs(path);
                     ViewBag.Message = "File uploaded successfully";
                     ArchivoTarea at = new ArchivoTarea();
                     at.IdTarea = idTarea;
-                    at.RutaArchivo = "/Archivos/Tareas/"+file.FileName;
+                    at.RutaArchivo = "/Archivos/Tareas/" + idTarea + "/" + fname;
                     at.FechaCreacion = DateTime.Now;
                     ctx.ArchivoTarea.Add(at);
                     ctx.SaveChanges();
@@ -171,6 +182,18 @@ namespace OrganizadorDeTareas.Controllers
                 return RedirectToAction("index", "home");
             }
             
+        }
+
+
+        public ActionResult Completar (int id)
+        {
+            Tarea t = ctx.Tarea.SingleOrDefault(o => o.IdTarea == id);
+            if (t != null)
+            {
+                t.Completada = 1;
+                ctx.SaveChanges();
+            }
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
 

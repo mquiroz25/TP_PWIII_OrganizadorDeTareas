@@ -25,8 +25,21 @@ namespace OrganizadorDeTareas.Controllers
                     Session["usuarioid"] = int.Parse(HttpContext.User.Identity.Name);
                 }
             }
-            
-            return View();
+
+            if (Session["usuarioid"] == null)
+            {
+                return View();
+            }
+            else
+            {
+                int sid = (int)Session["usuarioid"];
+                ViewBag.nombre = ctx.Usuario.SingleOrDefault(u => u.IdUsuario == sid).Nombre;
+                ViewBag.carpeta = ctx.Carpeta.Where(c => c.IdUsuario == sid);
+                List<Tarea> tareas = ctx.Tarea.Where(t => t.IdUsuario == sid && t.Completada==0).OrderByDescending(c => c.Prioridad).ToList();
+                tareas.OrderBy(c => c.FechaFin);
+                ViewBag.tarea = tareas;
+                return View("indexlog");
+            }
         }
 
 
@@ -76,12 +89,6 @@ namespace OrganizadorDeTareas.Controllers
                 nuevo.Activo = 0;
                 ctx.Usuario.Add(nuevo);
                 ctx.SaveChanges();
-                Carpeta general = new Carpeta();
-                general.IdUsuario = nuevo.IdUsuario;
-                general.Nombre = "General";
-                general.FechaCreacion = DateTime.Now;
-                ctx.Carpeta.Add(general);
-                ctx.SaveChanges();
 
                 return View("UsuarioCreado",nuevo);
             }
@@ -129,21 +136,55 @@ namespace OrganizadorDeTareas.Controllers
 
         public ActionResult login()
         {
+            bool regreso = false;
+            if (Request.UrlReferrer != null)
+            {
+                if (!Request.UrlReferrer.ToString().EndsWith("/login"))
+                {
+                    regreso = true;
+                }
+            }
+
+
+
+
             if (Session["usuarioid"] == null)
             {
                 if (HttpContext.User.Identity.IsAuthenticated == true)
                 {
                     Session["usuarioid"] = int.Parse(HttpContext.User.Identity.Name);
-                    return RedirectToAction("index", "home");
+                    if (regreso){
+                        return Redirect(Request.UrlReferrer.ToString());
+                    }
+                    else
+                    {
+                        return RedirectToAction("index", "home");
+                    }
                 }
                 else {
                     LoginModel lm = new LoginModel();
+                    if (regreso)
+                    {
+                        lm.Regreso = Request.UrlReferrer.ToString();
+                    }
+                    else
+                    {
+                        lm.Regreso = "index";
+                    }
+                    
                     return View(lm);
                 }
             }
             else
             {
-                return RedirectToAction("index", "home");
+                if (regreso)
+                {
+                    return Redirect(Request.UrlReferrer.ToString());
+                }
+                else
+                {
+                    return RedirectToAction("index", "home");
+                }
             }
 
             
@@ -182,7 +223,15 @@ namespace OrganizadorDeTareas.Controllers
 
                         FormsAuthentication.SetAuthCookie(u.IdUsuario.ToString(), record);
 
-                        return RedirectToAction("index", "home");
+                        if (lm.Regreso != "" && !lm.Regreso.EndsWith("/login"))
+                        {
+                            return Redirect(lm.Regreso);
+                        }
+                        else
+                        {
+                            return RedirectToAction("index","home");
+                        }
+                        
                     }
                     else
                     {

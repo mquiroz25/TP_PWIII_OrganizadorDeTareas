@@ -10,14 +10,24 @@
     Fecha creacion: @ViewBag.tarea.FechaCreacion <br />
     Horas estimadas: @ViewBag.tarea.EstimadoHoras <br />
     Fecha Fin: @ViewBag.tarea.FechaFin <br />
-    Prioridad: @ViewBag.tarea.Prioridad <br />
+    Prioridad: @switch ((short)ViewBag.tarea.Prioridad){
+        case 1: <span>Baja</span> break;
+        case 2: <span>Media</span> break;
+        case 3: <span>Alta</span> break;
+        case 4: <span>Urgente</span> break;
+        default: <span>error</span> break;
+    }
+
+
+
+    <br />
     Completada: @ViewBag.tarea.Completada <br />
 </div>
 <div>
     <h3>Archivos Adjuntos</h3>
     @foreach (ArchivoTarea a in ViewBag.adjuntos)
     {
-        <a href="@a.RutaArchivo">@a.RutaArchivo.Substring(17, a.RutaArchivo.Length - 17)</a><br />
+        <a href="@a.RutaArchivo">@System.IO.Path.GetFileName(a.RutaArchivo)</a><br />
     }
     <div>
         Subir nuevo adjunto
@@ -52,7 +62,7 @@
         <div id="form-group">
             <textarea class="form-control" rows="3" name="Texto"></textarea>
             <input type="hidden" name="idTarea"value="@ViewBag.id" />
-            <button type="submit" class="form-control" value="Enviar"></button>
+            <input type="submit" value="Enviar"/>
         </div>
     </form>
 </div>

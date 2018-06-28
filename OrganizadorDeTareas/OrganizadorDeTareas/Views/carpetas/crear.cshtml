@@ -8,19 +8,16 @@
 <h2>crear</h2>
 
 <form method="post" action="/carpetas/crear">
-    <br>
+    <div class="form-control">
+        <label>Nombre:</label>
+        @Html.ValidationMessageFor(o => o.Nombre)
+        <input type="text" name="Nombre" class="form-control" value="@Model.Nombre">
 
+        <label>Descripcion:</label>
+        @Html.ValidationMessageFor(o => o.Descripcion)
+        <input type="text" name="Descripcion" class="form-control" value="@Model.Descripcion">
 
-    <label>Nombre:</label>
-    @Html.ValidationMessageFor(o => o.Nombre)
-    <input type="text" name="Nombre" value="@Model.Nombre">
-
-
-    <label>Descripcion:</label>
-    @Html.ValidationMessageFor(o => o.Descripcion)
-    <input type="text" name="Descripcion" value="@Model.Descripcion">
-
-
-    <input type="submit" value="Enviar">
+        <input type="submit" value="Enviar">
+    </div>
 
 </form>
