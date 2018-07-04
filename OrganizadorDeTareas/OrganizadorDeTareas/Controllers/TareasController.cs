@@ -20,6 +20,7 @@ namespace OrganizadorDeTareas.Controllers
             else
             {
                 TempData["mensaje"] = "login requerido";
+                TempData["regreso"] = "/Tareas/";
                 return RedirectToAction("login", "home");
             }
         }
@@ -47,35 +48,55 @@ namespace OrganizadorDeTareas.Controllers
             else
             {
                 TempData["mensaje"] = "login requerido";
+                TempData["regreso"] = "/Tareas/nueva/";
+                if (id != null)
+                {
+                    TempData["regreso"] = TempData["regreso"] + id.ToString();
+                }
                 return RedirectToAction("login", "home");
             }
         }
-
-
+        
         public ActionResult Listar(int? id)
         {
+
+
             if (Session["usuarioid"] != null) {
                 int sid = (int)Session["usuarioid"];
+                var query = ctx.Tarea.Where(t => t.IdUsuario == sid);
+
+                ViewBag.carpeta = ctx.Carpeta.Where(c => c.IdUsuario == sid);
                 if (id != null)
                 {
-                    ViewBag.carpeta = ctx.Carpeta.Where(c => c.IdUsuario == sid);
                     ViewBag.idCarpeta = id;
-                    List<Tarea> tareas = ctx.Tarea.Where(t => t.IdUsuario == sid && t.IdCarpeta==id).OrderByDescending(c => c.Prioridad).ToList();
-                    tareas.OrderBy(c => c.FechaFin);
-                    ViewBag.tarea = tareas;
-                    return View();
+                    query = query.Where(t => t.IdCarpeta == id);
                 }
-                else {
-                    ViewBag.carpeta = ctx.Carpeta.Where(c => c.IdUsuario == sid);
-                    List<Tarea> tareas = ctx.Tarea.Where(t => t.IdUsuario == sid).OrderByDescending(c => c.Prioridad).ToList();
-                    tareas.OrderBy(c => c.FechaFin);
-                    ViewBag.tarea = tareas;
-                    return View();
+
+                if (Request["completadas"] == "C")
+                {
+                    query = query.Where(t => t.Completada == 1);
                 }
+
+                if (Request["completadas"] == "N")
+                {
+                    query = query.Where(t => t.Completada == 0);
+                }
+                List < Tarea > tareas = query.ToList();
+                tareas.OrderByDescending(c => c.Prioridad);
+                tareas.OrderBy(c => c.FechaFin);
+                ViewBag.tarea = tareas;
+
+                return View();
+
             }
             else
             {
                 TempData["mensaje"] = "login requerido";
+                TempData["regreso"] = "/Tareas/listar/";
+                if (id != null)
+                {
+                    TempData["regreso"] = TempData["regreso"] + id.ToString();
+                }
                 return RedirectToAction("login", "home");
             }
         }
@@ -98,6 +119,7 @@ namespace OrganizadorDeTareas.Controllers
             else
             {
                 TempData["mensaje"] = "login requerido";
+                TempData["regreso"] = "/Tareas/detalle/" + id;
                 return RedirectToAction("login", "home");
             }
         }

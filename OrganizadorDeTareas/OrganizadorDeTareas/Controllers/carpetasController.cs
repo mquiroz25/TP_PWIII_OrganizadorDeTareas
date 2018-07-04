@@ -21,6 +21,7 @@ namespace OrganizadorDeTareas.Controllers
             else
             {
                 TempData["mensaje"] = "login requerido";
+                TempData["regreso"] = "/Carpetas/";
                 return RedirectToAction("login", "home");
             }
 
@@ -36,6 +37,7 @@ namespace OrganizadorDeTareas.Controllers
             else
             {
                 TempData["mensaje"] = "login requerido";
+                TempData["regreso"] = "/Carpetas/crear";
                 return RedirectToAction("login", "home");
             }
 
@@ -66,6 +68,7 @@ namespace OrganizadorDeTareas.Controllers
             else
             {
                 TempData["mensaje"] = "login requerido";
+                TempData["regreso"] = "/Carpetas/crear";
                 return RedirectToAction("login", "home");
             }
         }
@@ -86,6 +89,7 @@ namespace OrganizadorDeTareas.Controllers
             else
             {
                 TempData["mensaje"] = "login requerido";
+                TempData["regreso"] = "/Carpetas/editar";
                 return RedirectToAction("login", "home");
             }
         }
@@ -128,6 +132,7 @@ namespace OrganizadorDeTareas.Controllers
             else
             {
                 TempData["mensaje"] = "login requerido";
+                TempData["regreso"] = "/Carpetas/listar";
                 return RedirectToAction("login", "home");
             }
 
@@ -147,6 +152,7 @@ namespace OrganizadorDeTareas.Controllers
             else
             {
                 TempData["mensaje"] = "login requerido";
+                TempData["regreso"] = "/Carpetas/listar";
                 return RedirectToAction("login", "home");
             }
 

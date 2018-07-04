@@ -136,55 +136,26 @@ namespace OrganizadorDeTareas.Controllers
 
         public ActionResult login()
         {
-            bool regreso = false;
-            if (Request.UrlReferrer != null)
-            {
-                if (!Request.UrlReferrer.ToString().EndsWith("/login"))
-                {
-                    regreso = true;
-                }
-            }
-
-
-
-
+            
             if (Session["usuarioid"] == null)
             {
                 if (HttpContext.User.Identity.IsAuthenticated == true)
                 {
                     Session["usuarioid"] = int.Parse(HttpContext.User.Identity.Name);
-                    if (regreso){
-                        return Redirect(Request.UrlReferrer.ToString());
-                    }
-                    else
-                    {
-                        return RedirectToAction("index", "home");
-                    }
+                    return RedirectToAction("index", "home");
                 }
                 else {
                     LoginModel lm = new LoginModel();
-                    if (regreso)
+                    if (TempData["regreso"] != null)
                     {
-                        lm.Regreso = Request.UrlReferrer.ToString();
+                        lm.Regreso = TempData["regreso"].ToString();
                     }
-                    else
-                    {
-                        lm.Regreso = "index";
-                    }
-                    
                     return View(lm);
                 }
             }
             else
             {
-                if (regreso)
-                {
-                    return Redirect(Request.UrlReferrer.ToString());
-                }
-                else
-                {
-                    return RedirectToAction("index", "home");
-                }
+                return RedirectToAction("index", "home");
             }
 
             
@@ -194,7 +165,6 @@ namespace OrganizadorDeTareas.Controllers
         [HttpPost]
         public ActionResult validarLogin(LoginModel lm)
         {
-            
             if (!this.IsCaptchaValid("verifique el CAPTCHA"))
             {
                 TempData["mensaje"] = "verifique el CAPTCHA";
@@ -223,7 +193,7 @@ namespace OrganizadorDeTareas.Controllers
 
                         FormsAuthentication.SetAuthCookie(u.IdUsuario.ToString(), record);
 
-                        if (lm.Regreso != "" && !lm.Regreso.EndsWith("/login"))
+                        if (lm.Regreso != null)
                         {
                             return Redirect(lm.Regreso);
                         }
